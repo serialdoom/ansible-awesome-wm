@@ -1,0 +1,58 @@
+---
+# tasks file for bin/roles/awesome-wm
+
+  - name: apt-get stuff
+    apt:
+      name: '{{ item }}'
+      state: present
+      cache_valid_time: 36000
+      update_cache: yes
+    become: true
+    with_items:
+      - cmake
+      - libxdg-basedir-dev
+      - libstartup-notification0-dev
+      - libcairo2-dev
+      - libgdk-pixbuf2.0-dev
+      - libxcb-cursor-dev
+      - libxcb-xtest0-dev
+      - libxcb-xinerama0-dev
+      - libxcb-util-dev
+      - libxcb-keysyms1-dev
+      - libxcb-icccm4-dev
+      # from sudo apt-get build-dep awesome
+      - liblua5.1-0-dev
+      - asciidoc
+      - debhelper
+      - docbook-xml
+      - docbook-xsl
+      - libdbus-1-dev
+      - libxcb-util0-dev
+      - libxml2-utils
+      - lua-filesystem
+      - lua-ldoc
+      - lua-penlight
+      - po-debconf
+      - sgml-data
+      - xmlto
+      - xsltproc
+
+    tags:
+      - apt
+    
+
+  - name: wget tarball
+    get_url:
+      url: '{{ awesome_version_table[awesome_version].url }}'
+      sha256sum: '{{ awesome_version_table[awesome_version].sha256 }}'
+      dest: '/tmp/{{ awesome_version_table[awesome_version].tarball }}'
+
+  - name: extract tarball
+    unarchive:
+      src: '/tmp/{{ awesome_version_table[awesome_version].tarball }}'
+      dest: '/tmp/'
+
+  - name: make stuff
+    shell: cmake -DCMAKE_INSTALL_PREFIX={{ install_dir }} && make && make install
+    args:
+      chdir: '/tmp/{{ awesome_version_table[awesome_version].dir }}'

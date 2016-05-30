@@ -1,0 +1,10 @@
+---
+# vars file for bin/roles/awesome-wm
+
+
+awesome_version_table:
+  '3.5.9':
+    url: 'https://awesome.naquadah.org/download/awesome-3.5.9.tar.bz2'
+    tarball: 'awesome-3.5.9.tar.bz2'
+    sha256: 99f6f7cd889bb13d3ad537d2c9441f7ddcf7de103a6b9ca0f4114d5b02086c80
+    dir: 'awesome-3.5.9'

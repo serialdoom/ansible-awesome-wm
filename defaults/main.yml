@@ -1,0 +1,5 @@
+---
+# defaults file for bin/roles/awesome-wm
+
+awesome_version: '3.5.9'
+install_dir: ~/.local
